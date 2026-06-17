@@ -60,3 +60,30 @@ class Canvas:
                     self.set_pixel(x, y, color)
                 elif d < r:
                     self.blend_pixel(x, y, color, r - d)
+
+    def ring(self, cx, cy, radius, color, width):
+        """Circle outline of the given stroke width, anti-aliased."""
+        half = width / 2
+        reach = radius + half + 1
+        for y in range(int(cy - reach), int(cy + reach) + 1):
+            dy = y - cy
+            for x in range(int(cx - reach), int(cx + reach) + 1):
+                d = ((x - cx) ** 2 + dy * dy) ** 0.5
+                self.blend_pixel(x, y, color, half + 0.5 - abs(d - radius))
+
+    def draw_vspan(self, x, top, bottom, color):
+        """Fill column x between floats `top` and `bottom`, anti-aliasing both ends."""
+        if not 0 <= x < self.w:
+            return
+        top = max(0.0, top)
+        bottom = min(float(self.h), bottom)
+        if bottom <= top:
+            return
+        ti, bi = int(top), int(bottom)
+        if ti == bi:
+            return self.blend_pixel(x, ti, color, bottom - top)
+        self.blend_pixel(x, ti, color, (ti + 1) - top)
+        for y in range(ti + 1, bi):
+            self.set_pixel(x, y, color)
+        if bi < self.h:
+            self.blend_pixel(x, bi, color, bottom - bi)

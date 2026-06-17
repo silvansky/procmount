@@ -33,6 +33,8 @@ Installable too (`pip install -e .`), which provides a `procmount` command.
 | `--moon / --no-moon` | on | draw a moon |
 | `--moon-size` | auto | moon radius in px |
 | `--stars` | `120` | number of stars |
+| `--contour` | off | stroke ridgelines only (line art) instead of filling |
+| `--line-width` | `2` | contour stroke width in px |
 | `--fg` | `white` | landscape color |
 | `--bg` | `black` | background color |
 
@@ -65,6 +67,9 @@ Every image lives in [`demo/`](demo/) and is reproducible from its command.
 
 <img src="demo/08-square-rose.png" width="420" alt="square rose">
 
+**Contour** — `--contour --layers 7 --roughness 1.2`
+![contour](demo/09-contour.png)
+
 Regenerate them all:
 
 ```sh
@@ -76,6 +81,7 @@ python3 -m procmount --seed 5  --roughness 0.6 --layers 7 --fade 0.75     -o dem
 python3 -m procmount --seed 42 --layers 3 --no-moon --stars 0 --fade 0.4  -o demo/06-minimal.png
 python3 -m procmount --seed 19 --bg "#02060f" --fg cyan --layers 6 --stars 300 -o demo/07-cyan-night.png
 python3 -m procmount --seed 8  -W 1024 -H 1024 --bg "#120618" --fg pink --layers 6 -o demo/08-square-rose.png
+python3 -m procmount --seed 11 --contour --layers 7 --roughness 1.2 -o demo/09-contour.png
 ```
 
 ## Library

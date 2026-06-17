@@ -35,6 +35,10 @@ def build_parser():
     )
     gen.add_argument("--moon-size", type=int, default=None, help="moon radius in px")
     gen.add_argument("--stars", type=int, default=120, help="number of stars")
+    gen.add_argument(
+        "--contour", action="store_true", help="stroke ridgelines only (line art) instead of filling",
+    )
+    gen.add_argument("--line-width", type=int, default=2, help="contour stroke width in px")
 
     col = p.add_argument_group("color")
     col.add_argument("--fg", type=parse_color, default="white", help="landscape color")
@@ -60,6 +64,8 @@ def main(argv=None):
         moon=args.moon,
         moon_size=args.moon_size,
         stars=args.stars,
+        contour=args.contour,
+        line_width=args.line_width,
     )
     write_png(args.output, canvas.w, canvas.h, canvas.buf)
     print(f"wrote {args.output} ({canvas.w}x{canvas.h}, seed {seed})")
